@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Car Finder</title>
+</head>
+<body>
+    <h1>Search for a Car</h1>
+    <form method="POST">
+        <input type="text" name="car_name" placeholder="Enter car name" required>
+        <button type="submit">Search</button>
+    </form>
+
+    {% if result %}
+        {% if result.error %}
+            <p style="color:red;">{{ result.error }}</p>
+        {% else %}
+            <h2>{{ result.name }}</h2>
+            <p><strong>Suggested City:</strong> {{ result.data.suggested_city }}</p>
+            <h3>Variants</h3>
+            <ul>
+                {% for variant, info in result.data.variants.items() %}
+                    <li>
+                        <strong>{{ variant }}:</strong> 
+                        Ex-Showroom: {{ info.price }} | 
+                        On-Road: {{ info.on_road_price }} | 
+                        {{ info.specs }} | 
+                        {{ info.seater }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
